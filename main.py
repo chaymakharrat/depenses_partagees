@@ -223,24 +223,23 @@ def dialogue_exporter(groupe: Groupe) -> None:
         print(f"  ✔ Bilan CSV exporté dans '{chemin}'.")
 
 
-def dialogue_groupe(groupe: Groupe) -> Groupe:
-    """Dialogue pour renommer ou créer un nouveau groupe."""
-    print("\n  1. Renommer le groupe actuel")
-    print("  2. Créer un nouveau groupe vide")
-    choix = input("  Votre choix [1] : ").strip() or "1"
-    if choix == "2":
-        nom = input("  Nom du nouveau groupe : ").strip()
-        groupe = creer_groupe(nom)
-        sauvegarder_groupe(groupe, FICHIER_JSON)
-        print(f"  ✔ Nouveau groupe '{groupe.nom}' créé.")
-    else:
-        nom = input(f"  Nouveau nom pour '{groupe.nom}' : ").strip()
-        if not nom:
-            raise ValueError("Le nom ne peut pas être vide.")
-        groupe.nom = nom
-        sauvegarder_groupe(groupe, FICHIER_JSON)
-        print(f"  ✔ Groupe renommé en '{groupe.nom}'.")
-    return groupe
+def dialogue_creer_groupe() -> Groupe:
+    """Dialogue pour créer un nouveau groupe vide (F1)."""
+    nom = input("  Nom du nouveau groupe (ex: Colocation, Voyage...) : ").strip()
+    nouveau_groupe = creer_groupe(nom)
+    sauvegarder_groupe(nouveau_groupe, FICHIER_JSON)
+    print(f"  ✔ Nouveau groupe '{nouveau_groupe.nom}' créé et sauvegardé.")
+    return nouveau_groupe
+
+
+def dialogue_renommer_groupe(groupe: Groupe) -> None:
+    """Dialogue pour renommer le groupe actuel."""
+    nom = input(f"  Nouveau nom pour '{groupe.nom}' : ").strip()
+    if not nom:
+        raise ValueError("Le nom ne peut pas être vide.")
+    groupe.nom = nom
+    sauvegarder_groupe(groupe, FICHIER_JSON)
+    print(f"  ✔ Groupe renommé en '{groupe.nom}'.")
 
 
 # ==============================================================================
@@ -248,34 +247,36 @@ def dialogue_groupe(groupe: Groupe) -> Groupe:
 # ==============================================================================
 
 def afficher_menu(groupe: Groupe) -> None:
-    """Affiche le menu principal."""
+    """Affiche le menu principal avec toutes les fonctionnalités F1 à F16."""
     soldes = calculer_soldes(groupe)
     equilibre = "✔ Équilibré" if verifier_soldes(soldes) else "✖ Déséquilibré"
     nb_non_soldees = sum(1 for d in groupe.depenses if not d.soldee)
-    print("\n" + "=" * 56)
-    print(f"  DÉPENSES PARTAGÉES — {groupe.nom.upper()}")
+    print("\n" + "=" * 58)
+    print(f"  DÉPENSES PARTAGÉES — GROUPE : {groupe.nom.upper()}")
     print(f"  {len(groupe.membres)} membre(s) | "
           f"{len(groupe.depenses)} dépense(s) ({nb_non_soldees} non soldée(s)) | {equilibre}")
-    print("=" * 56)
+    print("=" * 58)
+    print("  GESTION DU GROUPE")
+    print("   1. Créer / Ajouter un nouveau groupe")
+    print("   2. Renommer le groupe actuel")
     print("  MEMBRES")
-    print("   1. Lister les membres")
-    print("   2. Ajouter un membre")
-    print("   3. Supprimer un membre")
+    print("   3. Lister les membres")
+    print("   4. Ajouter un membre")
+    print("   5. Supprimer un membre")
     print("  DÉPENSES")
-    print("   4. Lister / filtrer / trier les dépenses")
-    print("   5. Ajouter une dépense")
-    print("   6. Modifier une dépense")
-    print("   7. Supprimer une dépense")
-    print("  BILAN & STATISTIQUES")
-    print("   8. Consulter soldes et plan de règlement")
-    print("   9. Statistiques et graphiques")
-    print("  10. J'ai réglé les virements (marquer les dépenses soldées)")
-    print("  EXPORT & CONFIGURATION")
-    print("  11. Exporter le bilan (CSV / TXT)")
-    print("  12. Créer / Renommer le groupe")
-    print("  13. Lancer les tests unitaires")
+    print("   6. Lister / filtrer / trier les dépenses")
+    print("   7. Ajouter une dépense")
+    print("   8. Modifier une dépense")
+    print("   9. Supprimer une dépense")
+    print("  BILAN & RÈGLEMENT")
+    print("  10. Consulter soldes et plan de règlement")
+    print("  11. Statistiques et graphiques textuels")
+    print("  12. Marquer les dépenses comme réglées (soldées)")
+    print("  EXPORT & TESTS")
+    print("  13. Exporter le bilan (CSV / TXT)")
+    print("  14. Lancer la suite de tests unitaires")
     print("   0. Quitter")
-    print("=" * 56)
+    print("=" * 58)
 
 
 def boucle_principale() -> None:
@@ -300,7 +301,7 @@ def boucle_principale() -> None:
     while True:
         try:
             afficher_menu(groupe)
-            choix = input("  Votre choix (0–13) : ").strip()
+            choix = input("  Votre choix (0–14) : ").strip()
 
             if choix == "0":
                 sauvegarder_groupe(groupe, FICHIER_JSON)
@@ -308,55 +309,57 @@ def boucle_principale() -> None:
                 break
 
             elif choix == "1":
+                groupe = dialogue_creer_groupe()
+
+            elif choix == "2":
+                dialogue_renommer_groupe(groupe)
+
+            elif choix == "3":
                 membres = lister_membres(groupe)
                 if membres:
-                    soldes = calculer_soldes(groupe)   # calculé une seule fois
+                    soldes = calculer_soldes(groupe)
                     print(f"\n  Membres du groupe '{groupe.nom}' ({len(membres)}) :")
                     for i, m in enumerate(membres, 1):
                         print(f"    {i}. {m:<15} ({format_montant(soldes.get(m, 0))})")
                 else:
                     print("  Aucun membre dans ce groupe.")
 
-            elif choix == "2":
+            elif choix == "4":
                 dialogue_ajouter_membre(groupe)
 
-            elif choix == "3":
+            elif choix == "5":
                 dialogue_supprimer_membre(groupe)
 
-            elif choix == "4":
+            elif choix == "6":
                 dialogue_lister_depenses(groupe)
 
-            elif choix == "5":
+            elif choix == "7":
                 dialogue_ajouter_depense(groupe)
 
-            elif choix == "6":
+            elif choix == "8":
                 dialogue_modifier_depense(groupe)
 
-            elif choix == "7":
+            elif choix == "9":
                 dialogue_supprimer_depense(groupe)
 
-            elif choix == "8":
+            elif choix == "10":
                 afficher_bilan(groupe)
 
-            elif choix == "9":
+            elif choix == "11":
                 afficher_statistiques(groupe)
 
-            elif choix == "10":
+            elif choix == "12":
                 dialogue_marquer_soldees(groupe)
 
-            elif choix == "11":
+            elif choix == "13":
                 dialogue_exporter(groupe)
 
-            elif choix == "12":
-                groupe = dialogue_groupe(groupe)
-
-            elif choix == "13":
-                # Import ici pour ne pas charger les tests au démarrage
+            elif choix == "14":
                 from test_noyau import lancer_tous_les_tests
                 lancer_tous_les_tests()
 
             else:
-                print("  Choix invalide. Entrez un numéro entre 0 et 13.")
+                print("  Choix invalide. Entrez un numéro entre 0 et 14.")
 
         except (KeyboardInterrupt, EOFError):
             print("\n\n  Interruption. Sauvegarde automatique...")
