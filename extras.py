@@ -33,12 +33,17 @@ from noyau import (
 # F13 — STATISTIQUES ET GRAPHIQUES TEXTUELS
 # ==============================================================================
 
-def dessiner_barre(valeur: int, valeur_max: int, largeur_max: int = 25) -> str:
-    """Génère une barre proportionnelle en blocs pleins '█'."""
+def dessiner_barre(valeur: int, valeur_max: int, largeur_max: int = 20) -> str:
+    """Génère une jauge fine et élégante (style barre de progression)
+
+    Utilise des blocs calibrés ('▰' rempli, '▱' vide) qui ne fusionnent pas
+    verticalement d'une ligne à l'autre dans le terminal.
+    """
     if valeur_max <= 0 or valeur <= 0:
-        return ""
-    nb = (valeur * largeur_max) // valeur_max
-    return "█" * max(1, nb)
+        return "▱" * largeur_max
+    nb = min(largeur_max, max(1, (valeur * largeur_max) // valeur_max))
+    reste = largeur_max - nb
+    return "▰" * nb + "▱" * reste
 
 
 def afficher_statistiques(groupe: Groupe) -> None:
@@ -202,3 +207,11 @@ def exporter_bilan_csv(groupe: Groupe, chemin: str = "bilan.csv") -> str:
             writer.writerow(["Virement", debiteur, crediteur,
                              montant_v, format_montant(montant_v)])
     return chemin
+
+
+# ==============================================================================
+# F14 BONUS — TABLEAU DE BORD WEB (délégué au module dédié web.py)
+# ==============================================================================
+
+# Re-export pour compatibilité
+from web import exporter_dashboard_html, generer_dashboard_html

@@ -1,36 +1,99 @@
 {
-  "nom": "Colocation",
+  "nom": "fleures",
   "membres": [
-    "Ali",
-    "Sara",
-    "Omar"
+    "amina",
+    "salima",
+    "nouha",
+    "nedra"
   ],
-  "prochain_id": 3,
+  "prochain_id": 7,
   "depenses": [
     {
       "id": 1,
-      "date": "2026-11-20",
-      "montant": 90000,
-      "payeur": "Ali",
+      "date": "2026-10-12",
+      "montant": 240000,
+      "payeur": "amina",
       "beneficiaires": [
-        "Ali",
-        "Sara",
-        "Omar"
+        "amina",
+        "salima",
+        "nouha",
+        "nedra"
       ],
-      "categorie": "Courses",
-      "description": "Courses hebdo"
+      "categorie": "Logement",
+      "description": "Location appartement weekend",
+      "soldee": false
     },
     {
       "id": 2,
-      "date": "2026-11-20",
-      "montant": 60000,
-      "payeur": "Sara",
+      "date": "2026-10-15",
+      "montant": 95500,
+      "payeur": "salima",
       "beneficiaires": [
-        "Sara",
-        "Omar"
+        "amina",
+        "salima",
+        "nouha",
+        "nedra"
+      ],
+      "categorie": "Courses",
+      "description": "Courses supermarché",
+      "soldee": false
+    },
+    {
+      "id": 3,
+      "date": "2026-10-28",
+      "montant": 50000,
+      "payeur": "nouha",
+      "beneficiaires": [
+        "amina",
+        "salima",
+        "nouha"
+      ],
+      "categorie": "Transport",
+      "description": "Essence et péage autoroute",
+      "soldee": false
+    },
+    {
+      "id": 4,
+      "date": "2026-11-05",
+      "montant": 120000,
+      "payeur": "amina",
+      "beneficiaires": [
+        "amina",
+        "salima",
+        "nouha",
+        "nedra"
       ],
       "categorie": "Restaurant",
-      "description": "Dîner"
+      "description": "Dîner poissons La Goulette",
+      "soldee": false
+    },
+    {
+      "id": 5,
+      "date": "2026-11-12",
+      "montant": 40000,
+      "payeur": "salima",
+      "beneficiaires": [
+        "nouha",
+        "nedra"
+      ],
+      "categorie": "Loisirs",
+      "description": "Billets de spectacle",
+      "soldee": false
+    },
+    {
+      "id": 6,
+      "date": "2026-11-20",
+      "montant": 36000,
+      "payeur": "nedra",
+      "beneficiaires": [
+        "amina",
+        "salima",
+        "nouha",
+        "nedra"
+      ],
+      "categorie": "Courses",
+      "description": "Pâtisserie et petit déjeuner",
+      "soldee": false
     }
   ]
 }

@@ -1,0 +1,20 @@
+==============================================================
+  BILAN DE RÈGLEMENT — FLEURES
+==============================================================
+  Dépenses non soldées prises en compte : 6 sur 6
+
+  ── SOLDES INDIVIDUELS ──────────────────────────────────────
+  amina            220,458 TND   Créditeur ✚
+  nedra           -106,875 TND   Débiteur  ✖
+  nouha           -109,542 TND   Débiteur  ✖
+  salima            -4,041 TND   Débiteur  ✖
+
+  Somme de contrôle : 0,000 TND  ✔ Équilibrée
+
+  ── PLAN DE RÈGLEMENT (VIREMENTS SUGGÉRÉS) ───────────────
+  1. nouha → amina  :  109,542 TND
+  2. nedra → amina  :  106,875 TND
+  3. salima → amina  :  4,041 TND
+
+  Nombre de virements : 3 (≤ 3)
+==============================================================

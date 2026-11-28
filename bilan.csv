@@ -1,0 +1,8 @@
+﻿Section,Membre / Débiteur,Créditeur,Montant (millimes),Montant formaté
+Solde,amina,,220458,"220,458 TND"
+Solde,nedra,,-106875,"-106,875 TND"
+Solde,nouha,,-109542,"-109,542 TND"
+Solde,salima,,-4041,"-4,041 TND"
+Virement,nouha,amina,109542,"109,542 TND"
+Virement,nedra,amina,106875,"106,875 TND"
+Virement,salima,amina,4041,"4,041 TND"

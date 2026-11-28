@@ -1,0 +1,39 @@
+{
+  "nom": "Colocation",
+  "membres": [
+    "Ali",
+    "Sara",
+    "Omar"
+  ],
+  "prochain_id": 3,
+  "depenses": [
+    {
+      "id": 1,
+      "date": "2026-11-20",
+      "montant": 90000,
+      "payeur": "Ali",
+      "beneficiaires": [
+        "Ali",
+        "Sara",
+        "Omar"
+      ],
+      "categorie": "Courses",
+      "description": "Courses hebdomadaires supermarché",
+      "soldee": false
+    },
+    {
+      "id": 2,
+      "date": "2026-11-21",
+      "montant": 60000,
+      "payeur": "Sara",
+      "beneficiaires": [
+        "Ali",
+        "Sara",
+        "Omar"
+      ],
+      "categorie": "Restaurant",
+      "description": "Dîner pizza colocation",
+      "soldee": false
+    }
+  ]
+}

@@ -30,6 +30,7 @@ Dépense « soldée » (conforme au cahier des charges) :
 from dataclasses import dataclass, field
 from datetime import datetime
 import json
+import os
 from typing import Callable
 
 
@@ -703,3 +704,26 @@ def charger_groupe(chemin: str = "groupe.json") -> Groupe:
             prochain_id = max_id + 1
 
     return Groupe(nom=data["nom"], membres=membres, depenses=depenses, prochain_id=prochain_id)
+
+
+def nom_fichier_groupe(nom_groupe: str, dossier: str = "groupes") -> str:
+    """Génère un chemin de fichier JSON sûr pour un groupe dans le dossier spécifié."""
+    nom_sain = "".join(c for c in nom_groupe if c.isalnum() or c in (" ", "-", "_")).strip()
+    nom_sain = nom_sain.replace(" ", "_").lower() or "groupe"
+    return os.path.join(dossier, f"{nom_sain}.json")
+
+
+def lister_groupes_disponibles(dossier: str = "groupes") -> list[tuple[str, str]]:
+    """Retourne la liste des tuples (nom_du_groupe, chemin_fichier) enregistrés."""
+    if not os.path.exists(dossier):
+        return []
+    resultats = []
+    for f in os.listdir(dossier):
+        if f.endswith(".json"):
+            chemin = os.path.join(dossier, f)
+            try:
+                g = charger_groupe(chemin)
+                resultats.append((g.nom, chemin))
+            except Exception:
+                continue
+    return sorted(resultats, key=lambda x: x[0].casefold())
